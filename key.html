@@ -8,30 +8,24 @@
   <link rel="stylesheet" type="text/css" href="./css/style.css">
   <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css">
   <link href='https://fonts.googleapis.com/css?family=JetBrains Mono' rel='stylesheet'>
+  <script src="./js/include.js"></script>
 
-<title>helloworld</title>
-<meta property="og:title" content="" />
-      <meta property="og:description" content="" />
+<title>PGP Key</title>
+<meta property="og:title" content="PGP Public Key" />
+      <meta property="og:description" content="My GPG key for secure communications" />
       <meta property="og:type" content="article" />
-      <meta property="og:url" content="/posts/key" />
+      <meta property="og:url" content="/key" />
       <meta property="og:image" content="https://primalkz.github.io" />
 
 </head>
 <body class="bg">
   <div class="box">
-  <hr>
-  <nav class="top">
-   <strong href="./index.html">primalkz ~$ <span class="blinking-cursor">█</span></strong> 
-     <a href="./index.html">Home</a></li>
-     <a href="./archive.html">Archive</a></li>
-     <a href="./about.html">About</a></li>
-    <!--<li style="float:right"><a href="./static/about.html">about</a></li>--> 
-  </nav>
-  <hr>
+  <div include-html="./header.html"></div>
   <div class="contain">
+  <div class="main-content">
   <div class="out">
   </div>
-  <article>
+<article>
 <h2 id="pub-key.">PUB key.</h2>
 <p style="font-family:'Lucida Console', monospace;"> —–BEGIN PGP PUBLIC KEY BLOCK—–
 mQINBGLqLHMBEAClavRnTgRJD+4MlBuzkgvqAQsq8reUc5g6mZ3vKXyeoYlQbiJF
@@ -82,22 +76,12 @@ wVGMUDcco4mzeL41P+WPd/KykfXQFMlCLvLksqYe58t8t4PxLFoycJPAF1YKGx+k
 2iVNydzSt+2Y5C1fS2LG8cLEl8tz3157uOYvetDsaEjQnAqhuVvMT8/diAfLpuCT
 jsIIf2QhMVqhZesfzwNhUm4Z28QP6oT4rGNJZF+vZUbduAGFj62ZTZ6BGRGm4YuX
 0ejytWi3ihdvmAKUgCfW3sS5 =shgt —–END PGP PUBLIC KEY BLOCK—– </p>
+<p><small><em>Posted on July 28, 2022</em></small></p>
 </article>
-<hr>
-<div class="social">
-  <a href="https://www.github.com/primalkz" target="_blank"><i class="fab fa-github"></i></a>
-  <a href="https://instagram.com/primalkz" target="_blank"><i class="fab fa-instagram"></i></a>
-  <a href="https://www.youtube.com/channel/UCFUjLYthUqWynTeDs8TV3Rg" target="_blank"><i class="fab fa-youtube"></i></a>	
-  <a href="https://t.me/deadguy64" target="_blank"><i class="fab fa-telegram"></i></a>	
-  <a href="./key.html"><i class="fas fa-key"></i></a>	
-  <a href="mailto:primalkz4@gmail.com"><i class="fas fa-envelope"></i></a>
+</div>
+<div include-html="./social.html"></div>
 </div>
 </div>
-</div>
-<footer>
-  <div class="last">		
-    <p><i class="fa fa-copyright"></i> 2022 PrimalKz <3</p>
-  </div>
-</footer>
+<div include-html="./footer.html"></div>
 </body>
 </html>
