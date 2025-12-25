@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="../js/include.js"></script>
+  <div include-html="../head.html"></div>
+
+<title>The Modern Gaming Guide on Arch Linux</title>
+<meta property="og:title" content="The Modern Gaming Guide on Arch Linux" />
+<meta property="og:description" content="The Modern Gaming Guide on Arch Linux" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/posts/gaming_on_linux.html" />
+<meta property="og:image" content="https://primalkz.github.io" />
+<meta name="keywords" content="#LinuxGaming #ArchLinux #AMD #Gaming #Proton #UMU" />
+<meta name="title" content="The Modern Gaming Guide on Arch Linux" />
+<meta name="preview" content="I moved to Linux for the control, and I stayed for the performance. Linux gaming has come a long way. What used to require lots of tweaking now mostly" />
+<meta name="date" content="2025-12-25 23:57:56" />
+
+</head>
+<body class="bg">
+  <div class="box">
+  <div include-html="../header.html"></div>
+  <div class="contain">
+  <div class="main-content">
+  <div class="out">
+  </div>
+  <h1><strong>The Modern Gaming Guide on Arch Linux</strong></h1>
+  <p style="color: #9494d3; font-size: 0.9em; margin-bottom: 15px;">Last modified: 2025-12-25 23:57:56</p>
+
+  <article>
+<h2 id="introduction">Introduction</h2>
+<p>I moved to Linux for the control, and I stayed for the performance. Linux gaming has come a long way. What used to require lots of tweaking now mostly works out of the box. I’ve been gaming on Linux for years and put together this practical guide based on my experience with my AMD cards. While I’ll use my card as an example, these steps work for most modern AMD GPUs.</p>
+<h2 id="why-amd-for-linux-gaming">Why AMD for Linux Gaming</h2>
+<p>AMD’s open source drivers make them the undisputed champion for Linux gamers:</p>
+<ul>
+<li><strong>Open source drivers</strong> - No proprietary blobs, everything’s open source</li>
+<li><strong>Mesa performance</strong> - Good OpenGL and Vulkan support</li>
+<li><strong>Works out of the box</strong> - Minimal setup required</li>
+<li><strong>Good Proton compatibility</strong> - Windows games run well</li>
+<li><strong>Wide GPU range</strong> - From budget cards to high-end models</li>
+</ul>
+<h2 id="essential-setup">Essential Setup</h2>
+<h3 id="step-1-install-graphics-stack-arch-linux">Step 1: Install Graphics Stack (Arch Linux)</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ensure multilib is enabled in /etc/pacman.conf first</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Use paru for AUR packages</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">paru</span> <span class="at">-S</span> mesa lib32-mesa vulkan-radeon lib32-vulkan-radeon libva-mesa-driver lib32-libva-mesa-driver</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># For NVIDIA users (alternative)</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># paru -S nvidia-dkms lib32-nvidia-utils</span></span></code></pre></div>
+<h3 id="step-2-enable-early-kms">Step 2: Enable Early KMS</h3>
+<p>Add <code>amdgpu</code> to <code>/etc/mkinitcpio.conf</code>:</p>
+<pre><code>MODULES=(amdgpu)</code></pre>
+<p>Rebuild initramfs:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mkinitcpio <span class="at">-P</span></span></code></pre></div>
+<h3 id="step-3-gaming-optimizations-optional">Step 3: Gaming Optimizations (Optional)</h3>
+<p>Add to bootloader parameters:</p>
+<pre><code>amdgpu.dc=1 amdgpu.ppfeaturemask=0xffffffff</code></pre>
+<p><em>Note: These optimizations are optional and can improve performance, but the card works fine without them.</em></p>
+<h2 id="understanding-windows-gaming-on-linux">Understanding Windows Gaming on Linux</h2>
+<h3 id="how-wineproton-works">How Wine/Proton Works</h3>
+<p>Many people think Wine is an emulator - it’s not. Wine (Wine Is Not an Emulator) is a <strong>compatibility layer</strong> that translates Windows API calls into something Linux understands. Here’s the breakdown:</p>
+<p><strong>Wine</strong> translates Windows APIs → Linux system calls
+<strong>Proton</strong> (Valve’s Wine fork) adds gaming-specific improvements:
+- <strong>DXVK/VKD3D</strong> - DirectX to Vulkan translation
+- <strong>ESYNC/FSYNC/NTSync</strong> - Performance synchronization improvements
+- <strong>Game-specific patches</strong> - Fixes for popular titles</p>
+<h3 id="the-modern-gaming-stack-umu-launcher">The Modern Gaming Stack: UMU Launcher</h3>
+<p>I used to use wine-ge, but now I use <strong>UMU Launcher</strong> - it’s a game-changer.</p>
+<p><strong>What is UMU?</strong>
+UMU (Unified Launcher for Windows games) is essentially Steam’s Proton runtime, but without Steam. It lets you run Windows games with the exact same environment Steam uses, but for any game launcher.</p>
+<p><strong>Why it matters:</strong></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Old way with Steam</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">steam-run</span> proton waitforexitandrun game.exe</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># New way with UMU</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="ex">umu-run</span> <span class="at">--wine</span><span class="op">=</span>GE-Proton8-27 game.exe</span></code></pre></div>
+<p>UMU gives you:
+- <strong>Steam’s runtime container</strong> without Steam
+- <strong>Same environment variables</strong> as Steam Proton
+- <strong>No Steam dependency</strong> - works with Epic Games, GOG, etc.
+- <strong>Unified prefix management</strong> - each game gets its own Windows environment</p>
+<h2 id="gaming-setup-workflow">Gaming Setup Workflow</h2>
+<h3 id="step-1-install-gaming-tools">Step 1: Install Gaming Tools</h3>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Core gaming packages</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">paru</span> <span class="at">-S</span> steam lutris wine-ge</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># UMU Launcher (recommended)</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="ex">paru</span> <span class="at">-S</span> umu-launcher</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Gaming dependencies</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="ex">paru</span> <span class="at">-S</span> gamemode lib32-gamemode</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="ex">paru</span> <span class="at">-S</span> dxvk vkd3d-proton</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Performance monitoring</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="ex">paru</span> <span class="at">-S</span> nvtop mesa-utils</span></code></pre></div>
+<h3 id="step-2-configure-lutris">Step 2: Configure Lutris</h3>
+<p>Lutris centralizes all your game launchers:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install Lutris</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">paru</span> <span class="at">-S</span> lutris</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Configure Steam integration</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Add your Steam account with public game details</span></span></code></pre></div>
+<h3 id="step-3-set-up-gaming-environment">Step 3: Set Up Gaming Environment</h3>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Enable gamemode for performance</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl enable gamemoded</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create gaming directories</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/Games/wine-prefixes</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/Games/umu-prefixes</span></code></pre></div>
+<h2 id="real-world-gaming-performance">Real-World Gaming Performance</h2>
+<p>This comparison shows the bridge between the “Polaris” (RX 580) and “RDNA 2” (RX 6600 XT) architectures. Games were tested at 1080p resolution.</p>
+<h3 id="native-linux-games-excellent-performance">Native Linux Games (Excellent Performance)</h3>
+<p>Native games generally offer the lowest latency and best stability.</p>
+<table>
+<thead>
+<tr>
+<th>Game</th>
+<th>Settings</th>
+<th>RX 580 (FPS)</th>
+<th>RX 6600 XT (FPS)</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Counter-Strike 2</td>
+<td>High</td>
+<td>90-110</td>
+<td>250+</td>
+<td>Native</td>
+</tr>
+<tr>
+<td>Dota 2</td>
+<td>Ultra</td>
+<td>100+</td>
+<td>200+</td>
+<td>Native</td>
+</tr>
+<tr>
+<td>Team Fortress 2</td>
+<td>High</td>
+<td>150+</td>
+<td>300+</td>
+<td>Native</td>
+</tr>
+</tbody>
+</table>
+<h3 id="windows-games-via-protonumu">Windows Games via Proton/UMU</h3>
+<p>These games run through translation layers. On AMD, the performance overhead is often less than 5% compared to Windows.</p>
+<table>
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 11%" />
+<col style="width: 12%" />
+<col style="width: 15%" />
+<col style="width: 27%" />
+</colgroup>
+<thead>
+<tr>
+<th>Game</th>
+<th>Proton Version</th>
+<th>Settings</th>
+<th>RX 580 (FPS)</th>
+<th>RX 6600 XT (FPS)</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cyberpunk 2077</td>
+<td>UMU/Experimental</td>
+<td>High/Med</td>
+<td>35-45 FPS</td>
+<td>77-92 FPS</td>
+<td>FSR 2.1 recommended for RX 580</td>
+</tr>
+<tr>
+<td>Elden Ring</td>
+<td>GE-Proton</td>
+<td>High</td>
+<td>40-50 FPS</td>
+<td>60 FPS (Stable)</td>
+<td>60 FPS cap reached easily on 6600 XT</td>
+</tr>
+<tr>
+<td>RDR2</td>
+<td>Proton 8.0+</td>
+<td>Medium</td>
+<td>45-55 FPS</td>
+<td>82-102 FPS</td>
+<td>Use Vulkan API in-game for AMD</td>
+</tr>
+<tr>
+<td>GTA V</td>
+<td>Proton 8.0+</td>
+<td>Very High</td>
+<td>60-75 FPS</td>
+<td>127-142+ FPS</td>
+<td>Smooth experience on both cards</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Important Notes:</strong>
+Valorant &amp; Apex Legends: These are currently unplayable on Linux. Valorant’s Vanguard anti-cheat requires a Windows kernel driver, and Respawn officially blocked Linux/Steam Deck access for Apex Legends in late 2024 to combat cheating.</p>
+<p><strong>Key Takeaways:</strong>
+The RX 580 (8GB) remains a 1080p beast for Linux, but shows its age in heavy titles like Cyberpunk 2077. Use FSR to keep frame rates above 60. The RX 6600 XT is an absolute beast for 1080p it punches way above its weight class on Linux. It hits 60 FPS on almost every AAA title and pushes 144+ FPS in competitive shooters. VRAM matters, 8GB models are preferred. 4GB cards may experience stuttering in RDR2 or Cyberpunk due to texture swap overhead.</p>
+<p><strong>How Games Actually Feel:</strong>
+Elden Ring has frame pacing so smooth that I actually forgot I was playing on Linux. It feels just as snappy, if not snappier, than it did back when I was on Windows. CS2 with 250+ FPS gives input latency so low that my shots register instantly. No more blaming the OS for missed headshots! Cyberpunk 2077 looks incredible with neon lights reflecting beautifully in the rain, and the open world feels incredibly immersive with FSR 2.1.</p>
+<p><strong>My gaming experience:</strong> I’ve personally tested this setup on my old RX 580 and now the RX 6600 XT, both work great, and Linux gaming performance has improved dramatically over the last 6 years. Most games run at 60+ FPS without any tweaking. Modern AMD cards handle 1080p gaming beautifully.</p>
+<p>Let’s be real: Part of the fun of being a Linux gamer is the 15 minutes of tweaking before you start a new game. There’s a certain satisfaction in knowing exactly how your system is handling a game like Cyberpunk.</p>
+<h2 id="performance-tuning">Performance Tuning</h2>
+<h3 id="corectrl-for-gpu-control-optional---amd-only">CoreCtrl for GPU Control (Optional - AMD Only)</h3>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install CoreCtrl</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">paru</span> <span class="at">-S</span> corectrl</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Add user to render and video groups</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> usermod <span class="at">-a</span> <span class="at">-G</span> render,video <span class="va">$USER</span></span></code></pre></div>
+<p><em>Note: CoreCtrl is optional for advanced users who want to fine-tune GPU settings. The card works perfectly fine without it.</em></p>
+<p><strong>My gaming profile (RX 6600 XT):</strong>
+- <strong>Power Limit</strong>: 160W (stock TDP)
+- <strong>GPU Clock</strong>: 2413MHz (game clock)
+- <strong>Memory Clock</strong>: 2000MHz (16 Gbps GDDR6)
+- <strong>Fan Curve</strong>: Aggressive for thermal stability</p>
+<h3 id="alternative-gpu-tools">Alternative GPU Tools</h3>
+<p><strong>For all GPUs:</strong></p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Monitor GPU performance</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="ex">nvtop</span>  <span class="co"># AMD/NVIDIA monitoring</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="ex">radeontop</span>  <span class="co"># AMD specific</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="ex">nvidia-smi</span>  <span class="co"># NVIDIA specific</span></span></code></pre></div>
+<h3 id="gaming-environment-variables">Gaming Environment Variables</h3>
+<p>Add to <code>~/.bashrc</code> or game launch scripts:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># General gaming optimizations</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">GAMEMODERUNEXEC</span><span class="op">=</span>1</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Note: DRI_PRIME=1 is only needed for laptops with hybrid graphics (Intel + AMD)</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># For desktop RX 6600 XT users, this does nothing</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Modern Proton defaults (usually don&#39;t need these)</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co"># export PROTON_USE_WINED3D=0  # Default: uses DXVK</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co"># export PROTON_NO_ESYNC=1     # Default: ESYNC enabled for performance</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co"># export PROTON_NO_FSYNC=1     # Default: FSYNC enabled for performance</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Wine prefix management</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">WINEPREFIX</span><span class="op">=</span>~/Games/umu-prefixes/game-name</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="co"># AMD specific optimizations (optional)</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">RADV_DEBUG</span><span class="op">=</span>nomemoryleak</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Note: AMD_DEBUG=nodcc can reduce performance on modern cards - only use for troubleshooting</span></span></code></pre></div>
+<p><strong>Important Notes:</strong>
+Don’t disable ESYNC/FSYNC - these provide smooth performance. DXVK is default - no need to set PROTON_USE_WINED3D=0. DRI_PRIME only for hybrid graphics - not needed for desktop RX 6600 XT.</p>
+<h2 id="troubleshooting-common-issues">Troubleshooting Common Issues</h2>
+<h3 id="screen-tearing">Screen Tearing</h3>
+<p>Enable FreeSync in your display settings:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check FreeSync support</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">xrandr</span> <span class="at">--props</span> <span class="kw">|</span> <span class="fu">grep</span> freesync</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Enable in compositor (KDE/GNOME have GUI options)</span></span></code></pre></div>
+<h3 id="vulkan-performance-issues">Vulkan Performance Issues</h3>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Verify Vulkan support</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="ex">vulkaninfo</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="st">&quot;GPU&quot;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Test Vulkan performance</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="ex">vkcube</span> <span class="at">--benchmark</span></span></code></pre></div>
+<h3 id="game-wont-launch">Game Won’t Launch</h3>
+<p>Common solutions:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Try different Proton versions</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="ex">umu-run</span> <span class="at">--wine</span><span class="op">=</span>GE-Proton8-27 game.exe</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="ex">umu-run</span> <span class="at">--wine</span><span class="op">=</span>Proton8.0 game.exe</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Clear prefix if corrupted</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> <span class="at">-rf</span> ~/Games/umu-prefixes/game-name</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="ex">umu-run</span> <span class="at">--wine</span><span class="op">=</span>GE-Proton8-27 game.exe</span></code></pre></div>
+<h3 id="anti-cheat-issues">Anti-Cheat Issues</h3>
+<p>Some games need specific Proton versions:
+- <strong>EAC Games</strong>: Use Proton Experimental
+- <strong>BattlEye</strong>: Usually works with Proton 8.0+
+- <strong>Easy Anti-Cheat</strong>: May need protontricks</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install missing components</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="ex">protontricks</span> <span class="at">--appid</span> GAMEID install d3dcompiler_43</span></code></pre></div>
+<h2 id="advanced-gaming-setup">Advanced Gaming Setup</h2>
+<h3 id="multiple-game-launchers">Multiple Game Launchers</h3>
+<p><strong>UMU Launcher for Epic Games:</strong></p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">umu-run</span> <span class="at">--wine</span><span class="op">=</span>GE-Proton8-27 ~/Games/EpicGames/Launcher.exe</span></code></pre></div>
+<p><strong>Lutris for GOG:</strong>
+- Add GOG games to Lutris library
+- Use Wine-GE runner for best compatibility</p>
+<p><strong>Steam for Steam Games:</strong>
+- Enable Proton for all games
+- Use Proton Experimental for latest fixes</p>
+<h3 id="performance-monitoring">Performance Monitoring</h3>
+<p>While you can technically “cat” system files to see your GPU stats, we have much better ways to do this. Here are the tools I actually use:</p>
+<h4 id="real-time-terminal-monitoring">Real-Time Terminal Monitoring:</h4>
+<p>If you want a “Task Manager” style view in your terminal, <code>nvtop</code> is the gold standard. It works for AMD, NVIDIA, and even Intel.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install: paru -S nvtop</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="ex">nvtop</span></span></code></pre></div>
+<p>Specifically for our RX 6600 XT, amdgpu_top provides more detailed stats than generic tools and VRAM thermals.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install: paru -S amdgpu_top</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="ex">amdgpu_top</span></span></code></pre></div>
+<p>This is the one you see in YouTube benchmark videos. It puts an overlay directly on your game so you can monitor FPS, temperatures, and more while you play.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install: paru -S mangohud lib32-mangohud</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co"># To use it in a terminal game/app:</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="ex">mangohud</span> gamemoderun ./game_executable</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co"># To use it in Steam:</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Right-click game &gt; Properties &gt; Launch Options:</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="ex">mangohud</span> %command%</span></code></pre></div>
+<h2 id="gpu-specific-considerations">GPU-Specific Considerations</h2>
+<h3 id="amd-gpus-recommended">AMD GPUs (Recommended)</h3>
+<p><strong>Advantages:</strong>
+- Open source drivers
+- Excellent Vulkan support
+- No proprietary software needed
+- Better power efficiency</p>
+<p><strong>Cards to consider:</strong>
+- <strong>Budget</strong>: RX 580, RX 6500 XT
+- <strong>Mid-range</strong>: RX 6600 XT, RX 6700 XT
+- <strong>High-end</strong>: RX 6800 XT, RX 7800 XT</p>
+<h3 id="nvidia-gpus-alternative">NVIDIA GPUs (Alternative)</h3>
+<p><strong>Advantages:</strong>
+- Historically better proprietary drivers
+- CUDA support (for non gaming)
+- Mature gaming ecosystem</p>
+<p><strong>Considerations:</strong>
+- Requires proprietary drivers
+- More setup complexity
+- Slightly worse Proton performance</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Linux gaming is now a <strong>first class experience</strong>. Here’s what you get:</p>
+<ul>
+<li><strong>Native performance</strong> on supported titles</li>
+<li><strong>Excellent Windows compatibility</strong> via Proton/UMU</li>
+<li><strong>Open source drivers</strong> (AMD) or mature proprietary drivers (NVIDIA)</li>
+<li><strong>Modern gaming tools</strong> that work better than Windows</li>
+<li><strong>Freedom from vendor lock in</strong></li>
+</ul>
+<p><strong>My recommendation:</strong> For building a Linux gaming rig, AMD GPUs offer the best experience out of the box. The RX 6600 XT is perfect for 1080p gaming, but the principles here apply to any modern GPU.</p>
+<h2 id="resources">Resources</h2>
+<ul>
+<li><a href="https://docs.kernel.org/gpu/amdgpu.html">AMDGPU Documentation</a></li>
+<li><a href="https://github.com/Open-Wine-Components/umu-launcher">UMU Launcher GitHub</a></li>
+<li><a href="https://www.protondb.com/">ProtonDB - Game Compatibility</a></li>
+<li><a href="https://wiki.archlinux.org/title/Gaming">Arch Linux Gaming Wiki</a></li>
+<li><a href="https://lutris.net/documentation/">Lutris Documentation</a></li>
+<li><a href="https://github.com/doitsujin/dxvk">DXVK - DirectX to Vulkan</a></li>
+<li><a href="https://wiki.gentoo.org/wiki/Gaming">Gentoo Gaming Wiki</a></li>
+<li><a href="https://www.phoronix.com/">Phoronix Linux Gaming News</a></li>
+</ul>
+</article>
+</div>
+<div include-html="../social.html"></div>
+</div>
+</div>
+<div include-html="../footer.html"></div>
+</body>
+</html>
