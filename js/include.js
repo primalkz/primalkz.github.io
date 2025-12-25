@@ -5,6 +5,11 @@
     link.type = 'text/css';
     link.href = cssPath;
     document.head.appendChild(link);
+    
+    const themeScriptPath = window.location.pathname.includes('/posts/') ? '../js/theme-changer.js' : './js/theme-changer.js';
+    const themeScript = document.createElement('script');
+    themeScript.src = themeScriptPath;
+    document.head.appendChild(themeScript);
 })();
 
 function toggleModal() {
