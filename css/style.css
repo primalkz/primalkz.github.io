@@ -709,4 +709,8 @@ article a:hover {
     .main-content {
         order: 1;
     }
+    
+    .desktop-gif {
+        display: none !important;
+    }
 }
