@@ -71,8 +71,6 @@ update_index() {
   <div class="main-content">
   <div class="out">
   <br>
-  <img src="./img/happy.jpg" onmouseover="this.src='./img/morehappy.jpg'; this.style.transform='rotate(10deg) scale(1.1)'" onmouseout="this.src='./img/happy.jpg'; this.style.transform='rotate(0deg) scale(1)'" style="transition: transform 0.6s ease, opacity 0.3s ease;">
-  <h1><strong>$NAME</strong></h1>
 	$intro_content
   </div>
   <hr>
@@ -260,6 +258,26 @@ update_posts_index() {
     echo "Posts index updated successfully"
 }
 
+update_footer() {
+    local footer_file="footer.html"
+    if [ ! -f "$footer_file" ]; then
+        echo "Warning: $footer_file not found, skipping footer update"
+        return 1
+    fi
+    echo "Updating footer..."
+    local temp_file=$(mktemp)
+    cat > "$temp_file" << EOF
+<footer>
+  <div class="last">		
+    <p><i class="fa fa-copyright fa-flip-horizontal"></i> <span id="current-year">2022</span> $NAME <3</p>
+  </div>
+</footer>
+EOF
+    mv "$temp_file" "$footer_file"
+    update_timestamp "$footer_file"
+    echo "Footer updated successfully"
+}
+
 echo "Starting site update..."
 echo "Using configuration: NAME=$NAME"
 
@@ -268,5 +286,6 @@ update_about
 update_posts
 update_posts_index
 update_social
+update_footer
 
 echo "Site update complete!"

@@ -13,7 +13,7 @@
 <meta name="keywords" content="static site, generator, automation, pandoc, jq" />
 <meta name="title" content="Getting Started with Static Site Generator" />
 <meta name="preview" content="A simple static site generator using pandoc and jq to create a blog from markdown files." />
-<meta name="date" content="2025-12-26 19:49:24" />
+<meta name="date" content="2025-12-26 21:28:07" />
 <meta name="author" content="primalkz" />
 
 </head>
@@ -25,7 +25,7 @@
   <div class="out">
   </div>
   <h1><strong>Getting Started with Static Site Generator</strong></h1>
-  <p style="color: #9494d3; font-size: 0.9em; margin-bottom: 15px;">Last modified: 2025-12-26 19:49:24</p>
+  <p style="color: #9494d3; font-size: 0.9em; margin-bottom: 15px;">Last modified: 2025-12-26 21:28:07</p>
 
   <article>
 <h2 id="getting-started">Getting Started</h2>
@@ -41,35 +41,101 @@
 <ol type="1">
 <li>Clone the repo:</li>
 </ol>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/primalkz/primalkz.github.io.git</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> primalkz.github.io</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/primalkz/bashite.git</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> bashite</span></code></pre></div>
 <ol start="2" type="1">
+<li>Configure your site:
+Edit <code>config.env</code> with your information:</li>
+</ol>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Personal information</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="va">NAME</span><span class="op">=</span><span class="st">&quot;your-name&quot;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="va">DESCRIPTION</span><span class="op">=</span><span class="st">&quot;optional description&quot;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Social links</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="va">GITHUB</span><span class="op">=</span><span class="st">&quot;https://github.com/yourusername&quot;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="va">INSTAGRAM</span><span class="op">=</span><span class="st">&quot;https://instagram.com/yourusername&quot;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="va">YOUTUBE_EDITS</span><span class="op">=</span><span class="st">&quot;https://youtube.com/@yourchannel&quot;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="va">YOUTUBE_MAIN</span><span class="op">=</span><span class="st">&quot;https://youtube.com/@yourchannel&quot;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="va">TELEGRAM</span><span class="op">=</span><span class="st">&quot;https://t.me/yourusername&quot;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="va">EMAIL</span><span class="op">=</span><span class="st">&quot;youremail@gmail.com&quot;</span></span></code></pre></div>
+<ol start="3" type="1">
 <li>Make your content:</li>
 </ol>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> md/posts</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> md/index.md</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> md/about.md</span></code></pre></div>
-<ol start="3" type="1">
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> md/posts</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> md/index.md</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> md/about.md</span></code></pre></div>
+<ol start="4" type="1">
 <li>Generate:</li>
 </ol>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./generate.sh</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./generate.sh</span></span></code></pre></div>
 <h2 id="post-format">Post Format</h2>
 <p>Posts go in <code>md/posts/</code> with this header:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">## Content here</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>Your post content...</span></code></pre></div>
-<h2 id="files-you-need">Files You Need</h2>
+<div class="sourceCode" id="cb5"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">## Introduction</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>Welcome to my first blog post! This is where you write your amazing content.</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">## Main Content</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>Here you can put your main ideas, tutorials, or thoughts. Use **bold** for emphasis and *italic* for highlights.</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="fu">### Code Example</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="in">```javascript</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;Hello, World!&quot;</span>)<span class="op">;</span></span></code></pre></div>
+<h3 id="lists">Lists</h3>
 <ul>
-<li><code>md/index.md</code> - homepage</li>
-<li><code>md/about.md</code> - about page<br />
+<li>Item 1</li>
+<li>Item 2</li>
+</ul>
+<h2 id="conclusion">Conclusion</h2>
+<p>Thanks for reading!</p>
+<pre><code>
+## Content Structure
+
+### index.md Format
+
+Your homepage content goes in `md/index.md`. You can use HTML for special effects like hover images:
+
+```markdown
+# Your Name
+
+&lt;img src=&quot;./img/profile.jpg&quot;&gt;
+
+Your introduction text goes here. You can use **bold**, *italic*, and other markdown formatting.</code></pre>
+<h3 id="about.md-format">about.md Format</h3>
+<p>Your about page uses standard markdown:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">## About Me</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>Write about yourself here. You can use:</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Bold text** for emphasis</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>*Italic text* for highlights</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Lists for organized information</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Code blocks for technical content</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="fu">### My Skills</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>JavaScript, Python, HTML/CSS</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>React, Node.js, Git</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>And more...</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="fu">### Contact</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>Feel free to reach out!</span></code></pre></div>
+<h3 id="files-you-need">Files You Need</h3>
+<ul>
+<li><code>md/index.md</code> - homepage content</li>
+<li><code>md/about.md</code> - about page content<br />
 </li>
-<li><code>md/posts/</code> - blog posts</li>
+<li><code>md/posts/</code> - blog posts - put your <code>.md</code> files here with the header format shown above</li>
+<li><code>archive.html</code> - <strong>auto-generated archive page</strong> - shows all your posts automatically, you don’t need to touch this unless you want to modify the archive layout</li>
+<li><code>social.html</code> - <strong>social links sidebar</strong> - you can remove social icons you don’t want from this file</li>
 </ul>
 <h2 id="styling">Styling</h2>
 <p>Change <code>css/style.css</code> to customize the design.</p>
 <h2 id="todo">Todo</h2>
-<p>Make it more controllable and customizable. Currently you just edit the CSS file.</p>
+<p>Make it more controllable and customizable. Currently you can make themes by editing the CSS file.</p>
 </article>
 </div>
 <div include-html="../social.html"></div>
