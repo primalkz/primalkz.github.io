@@ -169,7 +169,7 @@ update_social() {
   <a href="$GITHUB" target="_blank"><i class="fab fa-github"></i></a>
   <a href="$INSTAGRAM" target="_blank"><i class="fab fa-instagram"></i></a>
   <a href="$YOUTUBE_MAIN" target="_blank"><i class="fab fa-youtube"></i></a>
-  <a href="https://t.me/deadguy64" target="_blank"><i class="fab fa-telegram"></i></a>
+  <a href="$TELEGRAM" target="_blank"><i class="fab fa-telegram"></i></a>
   <a href="./key.html"><i class="fas fa-key"></i></a>
   <a href="mailto:$EMAIL"><i class="fas fa-envelope"></i></a>
 </div>
@@ -278,6 +278,47 @@ EOF
     echo "Footer updated successfully"
 }
 
+update_header() {
+    local header_file="header.html"
+    if [ ! -f "$header_file" ]; then
+        echo "Warning: $header_file not found, skipping header update"
+        return 1
+    fi
+    echo "Updating header..."
+    local temp_file=$(mktemp)
+    cat > "$temp_file" << EOF
+<hr>
+  <nav class="top">
+    <strong href="/index.html">$NAME ~\$ <span id="terminal-prompt">index.html</span> <span class="blinking-cursor">█</span></strong> 
+    <div class="top-menu">
+      <a href="/index.html">Home</a></li>
+      <a href="/archive.html">Archive</a></li>
+      <a href="/about.html">About</a></li>
+    </div>
+    <button class="hamburger" onclick="toggleModal()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <!--<li style="float:right"><a href="./static/about.html">about</a></li>--> 
+  </nav>
+  <div id="modal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-menu">
+        <a href="/index.html" onclick="toggleModal()">Home</a>
+        <a href="/archive.html" onclick="toggleModal()">Archive</a>
+        <a href="/about.html" onclick="toggleModal()">About</a>
+      </div>
+      <button class="close-modal" onclick="toggleModal()">Close</button>
+    </div>
+  </div>
+<hr>
+EOF
+    mv "$temp_file" "$header_file"
+    update_timestamp "$header_file"
+    echo "Header updated successfully"
+}
+
 echo "Starting site update..."
 echo "Using configuration: NAME=$NAME"
 
@@ -287,5 +328,6 @@ update_posts
 update_posts_index
 update_social
 update_footer
+update_header
 
 echo "Site update complete!"

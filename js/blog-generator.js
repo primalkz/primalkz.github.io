@@ -58,26 +58,23 @@ class BlogGenerator {
         const indexContainer = document.getElementById('blog-posts');
         if (!indexContainer) return;
         const latestPosts = this.posts.slice(0, 3);
-        indexContainer.innerHTML = latestPosts.map(post => `
-            <article class="blog-preview">
-                <h2><a href="${post.url}">${post.title}</a></h2>
-                <p class="blog-meta">${this.formatDate(post.date)} • ${post.keywords}</p>
-                <p class="blog-preview-text">${post.preview}...</p>
-                <a href="${post.url}" class="read-more">Read more</a>
-            </article>
-        `).join('');
+        indexContainer.style.marginTop = '20px';
+        indexContainer.innerHTML = `
+            <div class="pin-grid">
+                ${latestPosts.map(post => this.createPostCard(post)).join('')}
+            </div>
+        `;
     }
 
     renderArchive() {
         const archiveContainer = document.getElementById('archive-posts');
         if (!archiveContainer) return;
-        archiveContainer.innerHTML = this.posts.map(post => `
-            <article class="archive-item">
-                <h2><a href="${post.url}">${post.title}</a></h2>
-                <p class="blog-meta">${this.formatDate(post.date)} • ${post.keywords}</p>
-                <p class="blog-preview-text">${post.preview}...</p>
-            </article>
-        `).join('');
+        archiveContainer.style.marginTop = '20px';
+        archiveContainer.innerHTML = `
+            <div class="pin-grid">
+                ${this.posts.map(post => this.createPostCard(post)).join('')}
+            </div>
+        `;
     }
 
     formatDate(dateString) {
@@ -93,6 +90,41 @@ class BlogGenerator {
         return this.posts.filter(post => 
             post.keywords.toLowerCase().includes(keyword.toLowerCase())
         );
+    }
+
+    createPostCard(post) {
+        const previewLength = Math.floor(Math.random() * 100) + 80;
+        const truncatedPreview = post.preview.length > previewLength 
+            ? post.preview.slice(0, previewLength) + '...'
+            : post.preview;
+        
+        return `
+            <article class="post-card terminal-card">
+                <div class="terminal-header">
+                    <div class="terminal-title">${post.filename.replace('.html', '')}.html</div>
+                </div>
+                <div class="terminal-content">
+                    <div class="post-header">
+                        <h2 class="post-title">
+                            <a href="${post.url}">${post.title}</a>
+                        </h2>
+                        <div class="post-meta">
+                            <span class="meta-date">${this.formatDate(post.date)}</span>
+                            <span class="meta-separator">•</span>
+                            <span class="meta-keywords">${post.keywords}</span>
+                        </div>
+                    </div>
+                    <div class="post-preview">
+                        <p>${truncatedPreview}</p>
+                    </div>
+                    <div class="post-actions">
+                        <a href="${post.url}" class="read-more-btn">
+                            <span class="terminal-prompt">$</span> cat posts/${post.filename.replace('.html', '')}.html
+                        </a>
+                    </div>
+                </div>
+            </article>
+        `;
     }
 }
 
