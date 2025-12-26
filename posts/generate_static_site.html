@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="../js/include.js"></script>
+  <div include-html="../head.html"></div>
+
+<title>Getting Started with Static Site Generator - primalkz</title>
+<meta property="og:title" content="Getting Started with Static Site Generator" />
+<meta property="og:description" content="Getting Started with Static Site Generator" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/generate_static_site.html" />
+<meta property="og:image" content="https://primalkz.github.io" />
+<meta name="keywords" content="static site, generator, automation, pandoc, jq" />
+<meta name="title" content="Getting Started with Static Site Generator" />
+<meta name="preview" content="A simple static site generator using pandoc and jq to create a blog from markdown files." />
+<meta name="date" content="2025-12-26 19:49:24" />
+<meta name="author" content="primalkz" />
+
+</head>
+<body class="bg">
+  <div class="box">
+  <div include-html="../header.html"></div>
+  <div class="contain">
+  <div class="main-content">
+  <div class="out">
+  </div>
+  <h1><strong>Getting Started with Static Site Generator</strong></h1>
+  <p style="color: #9494d3; font-size: 0.9em; margin-bottom: 15px;">Last modified: 2025-12-26 19:49:24</p>
+
+  <article>
+<h2 id="getting-started">Getting Started</h2>
+<p>A simple static site generator using pandoc and jq to create a blog from markdown files.</p>
+<h2 id="what-it-does">What It Does</h2>
+<ul>
+<li>Converts markdown to HTML with pandoc</li>
+<li>Extracts/saves metadata with jq for timestamps</li>
+<li>Runs everything with <code>./generate.sh</code></li>
+<li>Style everything by editing <code>css/style.css</code></li>
+</ul>
+<h2 id="setup">Setup</h2>
+<ol type="1">
+<li>Clone the repo:</li>
+</ol>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/primalkz/primalkz.github.io.git</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> primalkz.github.io</span></code></pre></div>
+<ol start="2" type="1">
+<li>Make your content:</li>
+</ol>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> md/posts</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> md/index.md</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> md/about.md</span></code></pre></div>
+<ol start="3" type="1">
+<li>Generate:</li>
+</ol>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./generate.sh</span></span></code></pre></div>
+<h2 id="post-format">Post Format</h2>
+<p>Posts go in <code>md/posts/</code> with this header:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">## Content here</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>Your post content...</span></code></pre></div>
+<h2 id="files-you-need">Files You Need</h2>
+<ul>
+<li><code>md/index.md</code> - homepage</li>
+<li><code>md/about.md</code> - about page<br />
+</li>
+<li><code>md/posts/</code> - blog posts</li>
+</ul>
+<h2 id="styling">Styling</h2>
+<p>Change <code>css/style.css</code> to customize the design.</p>
+<h2 id="todo">Todo</h2>
+<p>Make it more controllable and customizable. Currently you just edit the CSS file.</p>
+</article>
+</div>
+<div include-html="../social.html"></div>
+</div>
+</div>
+<div include-html="../footer.html"></div>
+</body>
+</html>
