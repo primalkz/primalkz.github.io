@@ -1,11 +1,17 @@
 class ThemeChanger {
     constructor() {
         // console.log('ThemeChanger initialized');
-        this.themes = ['dark', 'light', 'gruvbox'];
+        this.themes = ['dark', 'light', 'gruvbox', 'onedark', 'nord', 'dracula', 'tokyonight', 'everforest', 'material'];
         this.icons = {
             'dark': '<i class="fas fa-moon"></i>',
-            'light': '<i class="fas fa-asterisk"></i>', 
-            'gruvbox': '<i class="fas fa-sun"></i>'
+            'light': '<i class="fas fa-asterisk"></i>',
+            'gruvbox': '<i class="fas fa-sun"></i>',
+            'onedark':    '<i class="fas fa-code"></i>',
+            'nord':       '<i class="fas fa-snowflake"></i>',
+            'dracula':    '<i class="fa fa-skull"></i>',
+            'tokyonight': '<i class="fas fa-star"></i>',
+            'everforest': '<i class="fas fa-leaf"></i>',
+            'material':   '<i class="fas fa-swatchbook"></i>'
         };
         this.currentThemeIndex = 0;
         this.currentTheme = this.loadTheme();
@@ -14,9 +20,17 @@ class ThemeChanger {
     }
 
     init(){
-        this.createThemeChanger();
         this.applyTheme(this.currentTheme);
-        this.setupEventListeners();
+        
+        if (document.readyState == 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                this.createThemeChanger();
+                this.setupEventListeners();
+            });
+        } else {
+            this.createThemeChanger();
+            this.setupEventListeners();
+        }
     }
 
     createThemeChanger() {
@@ -72,11 +86,4 @@ class ThemeChanger {
         return this.themes.includes(saved) ? saved : 'dark';
     }
 }
-
-if (document.readyState == 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-        new ThemeChanger();
-    });
-} else {
-    new ThemeChanger();
-}
+new ThemeChanger();
