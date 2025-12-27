@@ -6,6 +6,16 @@
     link.href = cssPath;
     document.head.appendChild(link);
     
+    const loaderScriptPath = window.location.pathname.includes('/posts/') ? '../js/terminal-loader.js' : './js/terminal-loader.js';
+    const loaderXhr = new XMLHttpRequest();
+    loaderXhr.open('GET', loaderScriptPath, false);
+    loaderXhr.send();
+    if (loaderXhr.status == 200) {
+        const loaderScriptTag = document.createElement('script');
+        loaderScriptTag.textContent = loaderXhr.responseText;
+        document.head.appendChild(loaderScriptTag);
+    }
+    
     const themeScriptPath = window.location.pathname.includes('/posts/') ? '../js/theme-changer.js' : './js/theme-changer.js';
     const themeScript = document.createElement('script');
     themeScript.src = themeScriptPath;
