@@ -269,7 +269,7 @@ update_footer() {
     cat > "$temp_file" << EOF
 <footer>
   <div class="last">		
-    <p><i class="fa fa-copyright fa-flip-horizontal"></i> <span id="current-year">2022</span> $NAME <3</p>
+    <p><i class="fa fa-copyright fa-flip-horizontal"></i> <span id="current-year">2022</span> $NAME <3 | Made with <a href="https://github.com/primalkz/bashite" target="_blank">bashite</a></p>
   </div>
 </footer>
 EOF

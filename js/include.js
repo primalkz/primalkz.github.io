@@ -1,10 +1,14 @@
 (function() {
     const cssPath = window.location.pathname.includes('/posts/') ? '../css/style.css' : './css/style.css';
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.type = 'text/css';
-    link.href = cssPath;
-    document.head.appendChild(link);
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', cssPath, false);
+    xhr.send();
+    
+    if (xhr.status == 200) {
+        const style = document.createElement('style');
+        style.textContent = xhr.responseText;
+        document.head.appendChild(style);
+    }
     
     const themeScriptPath = window.location.pathname.includes('/posts/') ? '../js/theme-changer.js' : './js/theme-changer.js';
     const themeScript = document.createElement('script');

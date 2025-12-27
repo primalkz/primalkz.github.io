@@ -61,7 +61,7 @@ class BlogGenerator {
         indexContainer.style.marginTop = '20px';
         indexContainer.innerHTML = `
             <div class="pin-grid">
-                ${latestPosts.map(post => this.createPostCard(post)).join('')}
+                ${latestPosts.map(post => `<div class="pin-grid-item">${this.createPostCard(post)}</div>`).join('')}
             </div>
         `;
     }
@@ -72,7 +72,7 @@ class BlogGenerator {
         archiveContainer.style.marginTop = '20px';
         archiveContainer.innerHTML = `
             <div class="pin-grid">
-                ${this.posts.map(post => this.createPostCard(post)).join('')}
+                ${this.posts.map(post => `<div class="pin-grid-item">${this.createPostCard(post)}</div>`).join('')}
             </div>
         `;
     }
@@ -99,31 +99,28 @@ class BlogGenerator {
             : post.preview;
         
         return `
-            <article class="post-card terminal-card">
-                <div class="terminal-header">
-                    <div class="terminal-title">${post.filename.replace('.html', '')}.html</div>
-                </div>
-                <div class="terminal-content">
-                    <div class="post-header">
-                        <h2 class="post-title">
-                            <a href="${post.url}">${post.title}</a>
-                        </h2>
-                        <div class="post-meta">
-                            <span class="meta-date">${this.formatDate(post.date)}</span>
-                            <span class="meta-separator">•</span>
-                            <span class="meta-keywords">${post.keywords}</span>
+            <a href="${post.url}" class="post-card-link">
+                <article class="post-card terminal-card">
+                    <div class="terminal-content">
+                        <div class="post-header">
+                            <h2 class="post-title">
+                                ${post.title}
+                            </h2>
+                            <div class="post-meta">
+                                <span class="meta-date">${this.formatDate(post.date)}</span>
+                                <span class="meta-separator">•</span>
+                                <span class="meta-keywords">${post.keywords}</span>
+                            </div>
+                        </div>
+                        <div class="post-preview">
+                            <p>${truncatedPreview}</p>
+                        </div>
+                        <div class="post-actions">
+                            <span class="terminal-prompt">$</span> Read more
                         </div>
                     </div>
-                    <div class="post-preview">
-                        <p>${truncatedPreview}</p>
-                    </div>
-                    <div class="post-actions">
-                        <a href="${post.url}" class="read-more-btn">
-                            <span class="terminal-prompt">$</span> cat posts/${post.filename.replace('.html', '')}.html
-                        </a>
-                    </div>
-                </div>
-            </article>
+                </article>
+            </a>
         `;
     }
 }
